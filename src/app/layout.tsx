@@ -20,9 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-gray-900 bg-[#FAFAFA]`}>
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-gray-900 bg-background`}>
         <Navbar />
-        <main className="min-h-screen flex flex-col pt-20">
+        <main className="min-h-screen flex flex-col">
           {children}
         </main>
         <Footer />

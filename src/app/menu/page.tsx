@@ -15,7 +15,7 @@ export default function MenuPage() {
   );
 
   return (
-    <div className="min-h-screen bg-stone-50 py-24">
+    <div className="min-h-screen bg-background pt-32 pb-24">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h1 

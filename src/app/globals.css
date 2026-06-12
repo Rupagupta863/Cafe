@@ -7,9 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-playfair), serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-playfair), serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,7 +50,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: #FAF6F0;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -127,4 +128,30 @@
   html {
     @apply font-sans;
   }
+}
+
+@utility glass-card {
+  background: rgba(43, 27, 23, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+@utility glass-sphere {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 20px 30px rgba(255, 255, 255, 0.1), 
+              inset 10px 0 10px rgba(255, 255, 255, 0.02), 
+              inset -10px 0 10px rgba(0, 0, 0, 0.1), 
+              inset 0 -20px 30px rgba(0, 0, 0, 0.15), 
+              0 15px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+
+@utility text-vertical {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
 }
