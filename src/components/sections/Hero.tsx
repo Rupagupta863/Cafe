@@ -8,13 +8,16 @@ import { CAFE_NAME, CAFE_TAGLINE } from "@/constants";
 export function Hero() {
   return (
     <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80')",
-        }}
-      >
+      {/* Background Video with Overlay */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-stone-900">
+        <video
+          src="/hero-video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-80"
+        />
         <div className="absolute inset-0 bg-stone-900/60 backdrop-blur-[2px]" />
       </div>
 
@@ -68,7 +71,7 @@ export function Hero() {
 
       {/* Scroll Down Indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
@@ -76,7 +79,7 @@ export function Hero() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-1"
+          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1 backdrop-blur-sm"
         >
           <div className="w-1 h-2 bg-amber-500 rounded-full" />
         </motion.div>
