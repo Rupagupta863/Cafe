@@ -7,5 +7,5 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const CAFE_NAME = "Lumière Café";
-export const CAFE_TAGLINE = "Crafting moments, one cup at a time.";
+export const CAFE_NAME = "Brew Spot";
+export const CAFE_TAGLINE = "Your favorite spot for the best brew.";

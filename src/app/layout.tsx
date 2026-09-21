@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Fredoka, Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { CAFE_NAME, CAFE_TAGLINE } from "@/constants";
+import { Toaster } from "react-hot-toast";
+import { OfferPopup } from "@/components/ui/OfferPopup";
 
+const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
   title: `${CAFE_NAME} | ${CAFE_TAGLINE}`,
@@ -19,13 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-gray-900 bg-[#FAFAFA]`}>
-        <Navbar />
-        <main className="min-h-screen flex flex-col pt-20">
-          {children}
-        </main>
-        <Footer />
+    <html lang="en">
+      <body className={`${fredoka.variable} ${inter.variable} font-fredoka antialiased text-coffee-dark bg-white m-0 p-0`}>
+        <Toaster position="bottom-right" />
+        <OfferPopup />
+        {children}
       </body>
     </html>
   );

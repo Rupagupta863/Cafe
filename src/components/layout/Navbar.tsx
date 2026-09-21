@@ -2,105 +2,68 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Search, ShoppingBag, User } from "lucide-react";
+import { Logo } from "./Logo";
+import { useCartStore } from "@/store/cart";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Coffee } from "lucide-react";
-import { NAV_LINKS, CAFE_NAME } from "@/constants";
-import { buttonVariants } from "@/components/ui/button";
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const itemCount = useCartStore((state) => state.getItemCount());
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setIsMounted(true);
   }, []);
 
+  const isHome = pathname === "/";
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm py-4"
-          : "bg-transparent py-6"
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 z-50">
-          <Coffee className={`w-8 h-8 ${isScrolled ? "text-amber-700" : "text-amber-800"}`} />
-          <span className={`font-serif text-2xl font-bold tracking-tight ${isScrolled ? "text-gray-900" : "text-gray-900"}`}>
-            {CAFE_NAME}
+    <div className={`${isHome ? 'absolute top-0 bg-transparent' : 'relative bg-[#1F1B18] overflow-hidden'} w-full z-50`}>
+      {!isHome && (
+        <div className="absolute inset-x-0 -top-20 h-[600px] md:h-[700px] z-0 pointer-events-none">
+          <img
+            src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format&fit=crop"
+            alt="Coffee texture"
+            className="w-full h-full object-cover opacity-20 object-center"
+          />
+        </div>
+      )}
+      <nav className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-2.5 md:py-2.5 text-white flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 hover:scale-105 transition-transform">
+          <Logo className="w-12 h-12 text-white" dotColor="#DCA948" />
+          <span className="font-bold text-lg tracking-wider leading-tight text-white mt-1">
+            BREW<br />SPOT
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-amber-600 relative ${
-                pathname === link.href ? "text-amber-700" : "text-gray-600"
-              }`}
-            >
-              {link.label}
-              {pathname === link.href && (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-amber-600 rounded-full"
-                  initial={false}
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-            </Link>
-          ))}
-          <Link href="/reservations" className={buttonVariants({ className: "bg-amber-700 hover:bg-amber-800 text-white rounded-full px-6" })}>
-            Book a Table
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase">
+          <Link href="/" className={`${pathname === "/" ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige hover:scale-105 transition-all`}>HOME</Link>
+          <Link href="/shop" className={`${pathname.startsWith("/shop") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige hover:scale-105 transition-all`}>SHOP</Link>
+          <Link href="/about" className={`${pathname.startsWith("/about") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige hover:scale-105 transition-all`}>ABOUT</Link>
+          <Link href="/contact" className={`${pathname.startsWith("/contact") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige hover:scale-105 transition-all`}>CONTACT</Link>
+        </div>
+
+        {/* Action Icons */}
+        <div className="flex items-center gap-6">
+          <button className="hover:text-coffee-beige hover:scale-110 transition-all">
+            <Search className="w-5 h-5" />
+          </button>
+          <Link href="/account" className="hover:text-coffee-beige hover:scale-110 transition-all">
+            <User className="w-5 h-5" />
           </Link>
-        </nav>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden z-50 p-2 text-gray-800"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle Menu"
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-0 left-0 right-0 bg-white shadow-lg pt-24 pb-8 px-6 flex flex-col gap-6 md:hidden rounded-b-3xl"
-            >
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-xl font-medium ${
-                    pathname === link.href ? "text-amber-700" : "text-gray-800"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Link href="/reservations" onClick={() => setIsMobileMenuOpen(false)} className={buttonVariants({ className: "bg-amber-700 hover:bg-amber-800 text-white rounded-full mt-4 w-full h-12 text-lg" })}>
-                Book a Table
-              </Link>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </header>
+          <Link href="/cart" className="relative hover:text-coffee-beige hover:scale-110 transition-all">
+            <ShoppingBag className="w-5 h-5" />
+            {isMounted && itemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-coffee-brown text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                {itemCount}
+              </span>
+            )}
+          </Link>
+        </div>
+      </nav>
+    </div>
   );
 }
