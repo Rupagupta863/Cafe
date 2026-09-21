@@ -1,7 +1,37 @@
 import { PrismaClient } from '@prisma/client'
+import path from 'path'
+import fs from 'fs'
+
+const getDatabaseUrl = () => {
+  const envUrl = process.env.DATABASE_URL
+  if (envUrl && !envUrl.startsWith('file:')) {
+    return envUrl
+  }
+
+  const cwd = process.cwd()
+  const candidates = [
+    path.join(cwd, 'prisma', 'dev.db'),
+    path.join(cwd, 'dev.db'),
+  ]
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return `file:${candidate}`
+    }
+  }
+
+  return envUrl || `file:${path.join(cwd, 'dev.db')}`
+}
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  const url = getDatabaseUrl()
+  return new PrismaClient({
+    datasources: {
+      db: {
+        url,
+      },
+    },
+  })
 }
 
 declare global {
