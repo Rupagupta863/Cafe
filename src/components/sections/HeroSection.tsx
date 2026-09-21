@@ -17,7 +17,7 @@ export function HeroSection() {
 
       <Navbar />
 
-      <div className="relative z-10 container mx-auto px-8 lg:px-24 flex flex-col md:flex-row items-center justify-between">
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 lg:px-24 flex flex-col md:flex-row items-center justify-between">
         {/* Text Content */}
         <div className="max-w-xl pt-24 md:pt-0">
           <h2 className="text-white text-2xl md:text-4xl font-bold leading-tight mb-4 tracking-wide">

@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingBag, User } from "lucide-react";
+import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { useCartStore } from "@/store/cart";
 import { usePathname } from "next/navigation";
 
 export function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const itemCount = useCartStore((state) => state.getItemCount());
   const pathname = usePathname();
 
@@ -19,8 +20,9 @@ export function Navbar() {
   const isHome = pathname === "/";
 
   return (
-    <div className={`${isHome ? 'absolute top-0 bg-transparent' : 'relative bg-[#1F1B18] overflow-hidden'} w-full z-50`}>
-      {!isHome && (
+    <>
+      <div className={`${isHome ? 'absolute top-0 bg-transparent' : 'relative bg-[#1F1B18] overflow-hidden'} w-full z-50`}>
+        {!isHome && (
         <div className="absolute inset-x-0 -top-20 h-[600px] md:h-[700px] z-0 pointer-events-none">
           <img
             src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format&fit=crop"
@@ -47,11 +49,11 @@ export function Navbar() {
         </div>
 
         {/* Action Icons */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 sm:gap-6">
           <button className="hover:text-coffee-beige hover:scale-110 transition-all">
             <Search className="w-5 h-5" />
           </button>
-          <Link href="/account" className="hover:text-coffee-beige hover:scale-110 transition-all">
+          <Link href="/account" className="hidden sm:block hover:text-coffee-beige hover:scale-110 transition-all">
             <User className="w-5 h-5" />
           </Link>
           <Link href="/cart" className="relative hover:text-coffee-beige hover:scale-110 transition-all">
@@ -62,8 +64,51 @@ export function Navbar() {
               </span>
             )}
           </Link>
+          <button 
+            className="md:hidden hover:text-coffee-beige hover:scale-110 transition-all ml-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </nav>
-    </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 top-[72px] bg-[#1F1B18]/95 backdrop-blur-md border-t border-white/10 z-40 md:hidden flex flex-col shadow-2xl transition-all">
+          <div className="flex flex-col py-6 px-8 gap-6 text-sm font-medium tracking-widest uppercase">
+            <Link 
+              href="/" 
+              className={`${pathname === "/" ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige transition-colors block`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >HOME</Link>
+            <Link 
+              href="/shop" 
+              className={`${pathname.startsWith("/shop") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige transition-colors block`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >SHOP</Link>
+            <Link 
+              href="/about" 
+              className={`${pathname.startsWith("/about") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige transition-colors block`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >ABOUT</Link>
+            <Link 
+              href="/contact" 
+              className={`${pathname.startsWith("/contact") ? "text-coffee-beige" : "text-white"} hover:text-coffee-beige transition-colors block`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >CONTACT</Link>
+            <div className="h-px w-full bg-white/10 my-2"></div>
+            <Link 
+              href="/account" 
+              className="text-white hover:text-coffee-beige transition-colors flex items-center gap-3"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <User className="w-5 h-5" /> MY ACCOUNT
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -3,7 +3,7 @@ import Image from "next/image";
 export function PromoBanner() {
   return (
     <section className="relative w-full py-16 bg-coffee-beige overflow-hidden">
-      <div className="container mx-auto px-8 lg:px-24 flex flex-col md:flex-row items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-8 lg:px-24 flex flex-col md:flex-row items-center justify-between">
         
         {/* Left side text and button */}
         <div className="flex flex-col items-start text-left z-10 mb-8 md:mb-0">

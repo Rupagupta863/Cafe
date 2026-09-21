@@ -36,7 +36,7 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="py-20 px-8 bg-white text-center flex flex-col items-center relative overflow-hidden">
+    <section className="py-20 px-4 sm:px-8 bg-white text-center flex flex-col items-center relative overflow-hidden">
       <Toaster position="top-center" />
       
 
