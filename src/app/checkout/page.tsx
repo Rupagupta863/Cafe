@@ -46,6 +46,12 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async () => {
     setIsProcessing(true)
     
+    if (formData.paymentMethod === 'ONLINE') {
+      toast.error('Online payments are currently disabled. Please use Cash on Delivery.')
+      setIsProcessing(false)
+      return
+    }
+
     try {
       // Create the order in the backend
       const res = await fetch('/api/orders/create', {
@@ -76,10 +82,6 @@ export default function CheckoutPage() {
 
       if (!res.ok) {
         throw new Error(data.error || 'Failed to place order')
-      }
-
-      if (formData.paymentMethod === 'ONLINE') {
-        throw new Error('Online payments are currently disabled. Please use Cash on Delivery.')
       }
 
       // Order Success
