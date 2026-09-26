@@ -40,9 +40,18 @@ export function NewsletterSection() {
       <Toaster position="top-center" />
       
 
-      <h3 className="text-2xl font-bold text-coffee-dark mb-4">
-        Join in and get 15% off!
-      </h3>
+      <div className="flex flex-col items-center justify-center mb-6">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-coffee-brown">
+            Newsletter
+          </span>
+          <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+        </div>
+        <h3 className="text-2xl md:text-3xl font-serif text-gray-900 tracking-tight capitalize text-center">
+          Join in and get <span className="lining-nums">15%</span> off!
+        </h3>
+      </div>
       
       <p className="text-gray-500 mb-8 text-sm">
         Subscribe to our newsletter for exclusive offers, new product launches, and cafe updates.

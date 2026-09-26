@@ -27,8 +27,13 @@ export function FeaturedItems({ title, subtitle, items, viewAllLink, bgWhite = f
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <h2 className="text-amber-700 font-semibold tracking-widest uppercase text-sm mb-2">{subtitle}</h2>
-            <h3 className="text-4xl md:text-5xl font-serif font-bold text-gray-900">{title}</h3>
+            <div className="flex items-center gap-4 mb-3">
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-coffee-brown">
+                {subtitle}
+              </span>
+              <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-serif text-gray-900 tracking-tight capitalize">{title.toLowerCase()}</h3>
           </motion.div>
           {viewAllLink && (
             <motion.div

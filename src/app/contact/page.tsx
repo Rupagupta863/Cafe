@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
           <div className="relative z-10 p-8 sm:p-10 lg:p-12 text-white w-full max-w-xl mx-auto lg:mx-0 lg:ml-auto">
-            <h1 className="text-4xl md:text-5xl font-semibold font-fredoka mb-4 tracking-wide">
+            <h1 className="text-4xl md:text-5xl font-serif text-white mb-4 tracking-tight drop-shadow-md">
               Let's grab a <span className="text-[#DCA948]">coffee.</span>
             </h1>
             <p className="text-white/80 text-base md:text-lg mb-8 font-light leading-relaxed">
@@ -68,8 +68,14 @@ export default function ContactPage() {
 
           <div className="w-full max-w-lg relative z-10">
             <div className="mb-8 text-center lg:text-left">
-              <h2 className="text-3xl font-semibold text-gray-900 mb-2 font-fredoka">Send a message</h2>
-              <p className="text-gray-500 font-normal">
+              <div className="flex items-center gap-4 mb-3 justify-center lg:justify-start">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-coffee-brown">
+                  Contact Us
+                </span>
+                <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-serif text-gray-900 tracking-tight capitalize">Send a message</h2>
+              <p className="text-gray-500 font-normal mt-3">
                 Fill out the form below and we'll get back to you shortly.
               </p>
             </div>

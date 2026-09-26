@@ -7,7 +7,7 @@ export function PromoBanner() {
         
         {/* Left side text and button */}
         <div className="flex flex-col items-start text-left z-10 mb-8 md:mb-0">
-          <h3 className="text-2xl md:text-3xl font-bold text-coffee-dark mb-4 leading-tight">
+          <h3 className="text-2xl md:text-3xl font-serif text-coffee-dark mb-4 leading-tight tracking-tight">
             Check out our best<br />coffee beans
           </h3>
           <button className="bg-[#4D3729] text-white text-sm font-bold py-2.5 px-6 rounded-[20px] hover:bg-coffee-brown hover:scale-105 active:scale-95 hover:shadow-xl transition-all duration-300 shadow-lg flex items-center gap-2">

@@ -12,24 +12,28 @@ export function Testimonials() {
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-stone-200 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2" />
       
       <div className="container relative mx-auto px-4 md:px-8 z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2 
+        <div className="flex flex-col items-center justify-center mb-16">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-amber-700 font-semibold tracking-widest uppercase text-sm mb-2"
+            className="flex items-center gap-4 mb-3"
           >
-            Testimonials
-          </motion.h2>
+            <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-coffee-brown">
+              Testimonials
+            </span>
+            <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+          </motion.div>
           <motion.h3 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-6"
+            className="text-2xl md:text-3xl font-serif text-gray-900 tracking-tight capitalize text-center"
           >
-            What Our Customers Say
+            What our customers say
           </motion.h3>
         </div>
 

@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import Link from 'next/link'
 import { Search, ShoppingBag, Filter } from 'lucide-react'
 import Image from 'next/image'
+import { ProductCard } from '@/components/shop/ProductCard'
 
 export default async function ShopPage({
   searchParams,
@@ -128,40 +129,7 @@ export default async function ShopPage({
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
                   {products.map(product => (
-                    <Link href={`/product/${product.id}`} key={product.id} className="group flex flex-col bg-white border border-gray-100 hover:border-coffee-beige/40 rounded-2xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1">
-                      <div className="relative w-full aspect-square bg-gray-50 overflow-hidden">
-                        <Image
-                          src={product.image || '/images/menu_coffee_1.jpg'}
-                          alt={product.name}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500"></div>
-                      </div>
-
-                      <div className="flex flex-col p-4">
-                        <div className="flex justify-between items-start gap-2 mb-1">
-                          <span className="text-[9px] uppercase tracking-[0.2em] text-coffee-brown/80 font-semibold">
-                            {product.category?.name || 'Item'}
-                          </span>
-                          <span className="text-xs font-medium text-gray-900 bg-[#faf8f5] px-2 py-0.5 rounded-full whitespace-nowrap">
-                            ₹{product.price}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-serif text-gray-900 group-hover:text-coffee-brown transition-colors leading-snug">
-                          {product.name}
-                        </h3>
-
-                        <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between opacity-70 group-hover:opacity-100 transition-opacity">
-                          <span className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider">
-                            View details
-                          </span>
-                          <div className="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-coffee-brown group-hover:text-white transition-colors duration-300">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                    <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useCartStore } from '@/store/cart'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Check, Minus, Plus } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 
 type OptionChoice = { name: string; priceDelta: number }
@@ -63,46 +63,55 @@ export function ProductCustomizer({ product }: { product: any }) {
     <div className="space-y-8">
       <Toaster position="top-center" />
       
-      <div className="text-3xl font-bold text-coffee-dark">
-        ₹{currentPrice.toFixed(2)}
+      <div className="flex items-baseline gap-2 pb-4">
+        <span className="text-2xl font-semibold text-coffee-dark">₹{currentPrice.toFixed(2)}</span>
+        <span className="text-xs font-medium text-coffee-dark/60">Tax included</span>
       </div>
 
-      {parsedOptions.map(opt => (
-        <div key={opt.id} className="space-y-3">
-          <label className="block text-sm font-bold text-gray-700">{opt.name}</label>
-          <div className="flex flex-wrap gap-3">
-            {opt.choices.map((choice: OptionChoice) => (
-              <button
-                key={choice.name}
-                onClick={() => handleSelection(opt.name, choice.name)}
-                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all border ${
-                  selections[opt.name] === choice.name 
-                    ? 'border-coffee-brown bg-coffee-beige/20 text-coffee-dark shadow-sm' 
-                    : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                }`}
-              >
-                {choice.name} {choice.priceDelta > 0 && `(+₹${choice.priceDelta})`}
-              </button>
-            ))}
+      <div className="space-y-4">
+        {parsedOptions.map(opt => (
+          <div key={opt.id} className="space-y-2">
+            <label className="block text-sm font-medium text-coffee-dark">{opt.name}</label>
+            <div className="flex flex-wrap gap-2">
+              {opt.choices.map((choice: OptionChoice) => {
+                const isSelected = selections[opt.name] === choice.name;
+                return (
+                  <button
+                    key={choice.name}
+                    onClick={() => handleSelection(opt.name, choice.name)}
+                    className={`inline-flex items-center px-4 py-1.5 text-sm rounded-md border ${
+                      isSelected 
+                        ? 'border-coffee-brown bg-coffee-brown text-white' 
+                        : 'border-coffee-beige/30 bg-white text-coffee-dark/80 hover:border-coffee-brown/60 hover:bg-coffee-beige/5'
+                    } transition-colors`}
+                  >
+                    {choice.name} 
+                    {choice.priceDelta > 0 && <span className={`${isSelected ? 'text-white/70' : 'text-coffee-dark/50'} ml-1.5 text-xs`}>+₹{choice.priceDelta}</span>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <div className="space-y-3 pt-4 border-t border-gray-100">
-        <label className="block text-sm font-bold text-gray-700">Quantity</label>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden h-12 w-32">
+        <div className="space-y-2 pt-2 border-t border-coffee-beige/10">
+          <label className="block text-sm font-medium text-coffee-dark">Quantity</label>
+          <div className="flex items-center w-28 border border-coffee-beige/30 rounded-md overflow-hidden bg-white">
             <button 
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-10 h-full flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors text-gray-600"
-            >-</button>
-            <div className="flex-1 h-full flex items-center justify-center font-bold text-gray-900 border-x border-gray-200">
+              className="flex-1 h-8 flex items-center justify-center text-coffee-dark/60 hover:bg-coffee-beige/10 transition-colors"
+            >
+              <Minus className="w-3 h-3" />
+            </button>
+            <div className="flex items-center justify-center font-medium text-sm text-coffee-dark w-10 h-8 border-x border-coffee-beige/30">
               {quantity}
             </div>
             <button 
               onClick={() => setQuantity(quantity + 1)}
-              className="w-10 h-full flex items-center justify-center bg-gray-50 hover:bg-gray-100 transition-colors text-gray-600"
-            >+</button>
+              className="flex-1 h-8 flex items-center justify-center text-coffee-dark/60 hover:bg-coffee-beige/10 transition-colors"
+            >
+              <Plus className="w-3 h-3" />
+            </button>
           </div>
         </div>
       </div>
@@ -110,9 +119,10 @@ export function ProductCustomizer({ product }: { product: any }) {
       <div className="pt-4">
         <button 
           onClick={handleAddToCart}
-          className="w-full h-14 bg-coffee-dark text-white rounded-xl font-bold text-lg hover:bg-coffee-brown hover:scale-[1.02] active:scale-95 transition-all shadow-md flex items-center justify-center gap-3"
+          className="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-md shadow-sm text-white bg-coffee-dark hover:bg-coffee-brown transition-colors gap-2"
         >
-          <ShoppingCart className="w-5 h-5" /> Add to Cart — ₹{(currentPrice * quantity).toFixed(2)}
+          <ShoppingCart className="w-4 h-4" /> 
+          <span>Add to Order &mdash; ₹{(currentPrice * quantity).toFixed(2)}</span>
         </button>
       </div>
     </div>

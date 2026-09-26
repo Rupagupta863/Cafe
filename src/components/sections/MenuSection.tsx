@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Heart } from "lucide-react";
-import { useState } from "react";
-import { useCartStore } from "@/store/cart";
-import toast from "react-hot-toast";
+import { ProductCard } from "@/components/shop/ProductCard";
 
 interface MenuItem {
   id: string;
@@ -22,76 +18,33 @@ interface MenuSectionProps {
 }
 
 export function MenuSection({ title, items }: MenuSectionProps) {
-  const router = useRouter();
-  const { addItem } = useCartStore();
-  const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
-
-  const handleAddToCart = (e: React.MouseEvent, item: MenuItem) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addItem({
-      id: item.id + '-default',
-      productId: item.id,
-      name: item.title,
-      price: item.price,
-      image: item.image,
-      quantity: 1,
-      customization: "{}"
-    });
-    toast.success(`${item.title} added to cart!`);
-    router.push('/cart');
-  };
-
-  const toggleLike = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setLikedItems(prev => ({ ...prev, [id]: !prev[id] }));
-    if (!likedItems[id]) {
-      toast.success("Added to favorites!");
-    }
-  };
-
   return (
     <section className="py-10 px-8 lg:px-24 bg-white text-center">
-      <h3 className="text-xl font-bold text-coffee-dark tracking-widest mb-8">
-        {title}
-      </h3>
+      <div className="flex flex-col items-center justify-center mb-12">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-coffee-brown">
+            Menu
+          </span>
+          <div className="h-[1px] w-8 sm:w-16 bg-coffee-brown/30"></div>
+        </div>
+        <h3 className="text-2xl md:text-3xl font-serif text-gray-900 tracking-tight capitalize">
+          {title.toLowerCase()}
+        </h3>
+      </div>
       
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {items.map((item) => (
-          <Link href={`/product/${item.id}`} key={item.id} className="bg-coffee-cream rounded-xl p-4 flex flex-col relative shadow-sm hover:shadow-md transition-shadow h-full group cursor-pointer block">
-            <button 
-              onClick={(e) => toggleLike(e, item.id)}
-              className={`absolute top-4 right-4 z-10 transition-colors ${likedItems[item.id] ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
-            >
-              <Heart className={`w-5 h-5 ${likedItems[item.id] ? 'fill-current' : ''}`} />
-            </button>
-            
-            <div className="relative w-full h-36 rounded-lg overflow-hidden mb-3">
-              <Image 
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            
-            <div className="w-full text-left flex flex-col flex-1">
-              <h4 className="font-bold text-coffee-dark text-base mb-1">{item.title}</h4>
-              <p className="text-xs text-gray-700 mb-4 line-clamp-2 flex-1">
-                {item.description}
-              </p>
-              
-              <div className="flex justify-end w-full mt-auto">
-                <button 
-                  onClick={(e) => handleAddToCart(e, item)}
-                  className="bg-coffee-dark text-white text-xs font-bold py-2 px-5 rounded-[12px] hover:bg-coffee-brown hover:scale-105 active:scale-95 hover:shadow-md transition-all duration-300 z-10"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </Link>
+          <ProductCard
+            key={item.id}
+            product={{
+              id: item.id,
+              name: item.title,
+              price: item.price,
+              image: item.image,
+              description: item.description,
+            }}
+          />
         ))}
       </div>
       
